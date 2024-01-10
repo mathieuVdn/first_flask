@@ -8,5 +8,6 @@ class Config(object):
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
     #     'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        f"mysql://root:root@localhost:3306/first_flask_app"
+        f"mysql://root:@localhost:3306/first_flask_app"
 
+    
