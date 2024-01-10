@@ -77,3 +77,10 @@ def user(username):
         {'author': user, 'body': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+
+
+@app.route("/users")
+def users():
+    users = db.session.execute(sa.select(User)).scalars().all()
+    return render_template("list_users.html", users=users)
+

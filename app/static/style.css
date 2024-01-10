@@ -10,3 +10,20 @@ div {
 .error {
     color: red;
 }
+
+.success {
+    color: green;
+}
+
+.list_cards {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.cards {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 1rem;
+    padding: 1rem 3rem;
+    margin: 2rem;
+}
