@@ -1,37 +1,110 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Register</h1>
+<section class="section is-medium container">
+    <h1 class="title has-text-centered">Register</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span class="error">[{{ error }}]</span>
+        <div class="field">
+            {{ form.lastname.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form.lastname(class_="input")}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                {% for error in form.lastname.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.firstname.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form.firstname(class_="input")}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                {% for error in form.lastname.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div>
+            {{ form.gender.label(class_="label")}}
+            <div class="select">
+                {{form.gender}}
+            </div>
+            {% for error in form.gender.errors %}
+            <span class="help is-danger">{{ error.replace(".", "")}}</span>
             {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=64) }}<br>
-            {% for error in form.email.errors %}
-            <span class="error">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span class="error">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password2.label }}<br>
-            {{ form.password2(size=32) }}<br>
-            {% for error in form.password2.errors %}
-            <span class="error">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
+        </div>
+        <div class="field">
+            {{ form.username.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form.username(class_="input")}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                {% for error in form.lastname.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.email.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form.email(class_="input")}}
+                <span class="icon is-small is-left">
+                   <i class="fas fa-envelope"></i>
+                </span>
+                {% for error in form.lastname.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.password.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form.password(class_="input")}}
+                <span class="icon is-small is-left">
+                   <i class="fas fa-lock"></i>
+                </span>
+                {% for error in form.password.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.password2.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form.password2(class_="input")}}
+                <span class="icon is-small is-left">
+                   <i class="fas fa-lock"></i>
+                </span>
+                {% for error in form.password2.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div class="file has-name">
+            <label class="file-label">
+                <input class="file-input" type="file" name="resume">
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        Choose a file…
+                    </span>
+                </span>
+                <span class="file-name">
+                    Screen Shot 2017-07-29 at 15.54.25.png
+                </span>
+            </label>
+        </div>
+        <div class="field">
+            <p class="control has-text-centered mg-medium">
+                <button class="button is-success ">
+                    Submit
+                </button>
+            </p>
+        </div>
     </form>
+    <p class="control has-text-centered mt-5">Already have an account? <a href="{{ url_for('login') }}">Click to
+        login!</a></p>
+</section>
 {% endblock %}

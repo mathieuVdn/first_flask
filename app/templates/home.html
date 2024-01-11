@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+      <p class="title">
+        Welcome to my first Flask App
+      </p>
+      <p class="subtitle">
+        Login or create an account to enjoy the site
+      </p>
+         <div class="buttons">
+            <a href="{{ url_for('register') }}" class="button is-primary">
+                <strong>Sign up</strong>
+            </a>
+            <a href="{{ url_for('login') }}" class="button is-light">
+                Log in
+            </a>
+        </div>
+</section>
+{% endblock %}

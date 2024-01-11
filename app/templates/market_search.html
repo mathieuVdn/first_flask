@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search Ticker</h1>
+        <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+            <div>
+            {{ form.symbol.label }} <br>
+            {{ form.symbol }} <br>
+            {% for error in form.symbol.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+            {{ form.submit() }}
+            </div>
+    </form>
+{% endblock %}

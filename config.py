@@ -9,5 +9,5 @@ class Config(object):
     #     'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         f"mysql://root:@localhost:3306/first_flask_app"
+    UPLOAD_FOLDER = os.path.join(basedir, 'app/static/uploads')
 
-    

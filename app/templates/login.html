@@ -1,31 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign in</h1>
-    <form action="" method="POST" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }} <br>
-            {{form.username(size=32)}} <br>
+    <section class="section is-medium container">
+        <div class="is-flex-direction-column is-justify-content-center">
+            <h1 class="title has-text-centered ">Sign in</h1>
+            <form action="" method="POST" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="field">
+                    {{ form.username.label(class_="label")}}
+                    <p class="control has-icons-left has-icons-right">
+                        {{form.username(class_="input")}}
+                        <span class="icon is-small is-left">
+                           <i class="fas fa-user"></i>
+                        </span>
+                        {% for error in form.username.errors %}
+                        <span class="help is-danger">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="field">
+                    {{ form.password.label(class_="label") }}
+                    <p class="control has-icons-left has-icons-right">
+                        {{form.password(class_="input")}}
+                        <span class="icon is-small is-left">
+                           <i class="fas fa-lock"></i>
+                        </span>
 
-            {% for error in form.username.errors %}
-
-            <span style="color: red;">[{{ error }}]</span>
-
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }} <br>
-            {{ form.password(size=32) }} <br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-
-            {% endfor %}
-
-        </p>
-        <p>{{ form.remember}}</p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+                        {% for error in form.username.errors %}
+                        <span class="help is-danger">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-text-centered mg-medium">
+                        <button class="button is-success ">
+                          Login
+                        </button>
+                    </p>
+                </div>
+            </form>
+            <p class="control has-text-centered mt-5">New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+        </div>
+    </section>
 {% endblock %}

@@ -1,29 +1,6 @@
-h1 {
-    text-align: center;
-    font-size: 2.5rem;
-}
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 
-div {
-    font-size: 1.5rem;
-}
 
-.error {
-    color: red;
-}
-
-.success {
-    color: green;
-}
-
-.list_cards {
-    display: flex;
-    justify-content: space-evenly;
-
-}
-
-.cards {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    border-radius: 1rem;
-    padding: 1rem 3rem;
-    margin: 2rem;
+.test{
+    margin: 50rem;
 }

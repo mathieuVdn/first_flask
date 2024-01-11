@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>List of Users</h1>
-    <div class="list_cards">
-    {% for user in users %}
-        <div class="cards">
-            <p> Username : {{ user.username }} </p>
-            <p>Email : {{user.email}}</p>
-        </div>
-    {% endfor %}
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-flex-start mt-6">
+    <h1 class="title">List of Users</h1>
+    <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for user in users %}
+            <tr>
+                <td>{{ user.id}}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+               <td>{{ "Male" if user.gender == 0 else "Female" }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
     </div>
+</section>
 {% endblock %}
