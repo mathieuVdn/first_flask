@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section is-medium container">
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-justify-content-flex-start mt-4  ">
     <h1 class="title has-text-centered">Register</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form.hidden_tag() }}
         <div class="field">
             {{ form.lastname.label(class_="label")}}
@@ -80,28 +80,27 @@
                 <span class="help is-danger">{{ error }}</span>
                 {% endfor %}
         </div>
-        <div class="file has-name">
+        <div class="file">
             <label class="file-label">
-                <input class="file-input" type="file" name="resume">
+                 {{ form.profile_picture(class_="file-input") }}
                 <span class="file-cta">
                     <span class="file-icon">
                         <i class="fas fa-upload"></i>
                     </span>
                     <span class="file-label">
-                        Choose a file…
+                        {{ form.profile_picture.label }}
                     </span>
-                </span>
-                <span class="file-name">
-                    Screen Shot 2017-07-29 at 15.54.25.png
                 </span>
             </label>
         </div>
+        {% for error in form.profile_picture.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
         <div class="field">
             <p class="control has-text-centered mg-medium">
-                <button class="button is-success ">
-                    Submit
-                </button>
+                {{ form.submit(class_="button is-success")}}
             </p>
+        </div>
         </div>
     </form>
     <p class="control has-text-centered mt-5">Already have an account? <a href="{{ url_for('login') }}">Click to

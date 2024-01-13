@@ -3,7 +3,7 @@
 {% block content %}
 <section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
     <p class="title">
-        Welcome to my first Flask App {{ "Mrs." + user.lastname + " " + user.firstname if user.gender else "Mr. " + user.lastname + " " + user.firstname }}!
+        Welcome to my first Flask App {{ "Mrs. " if user.gender else "Mr. "}} {{user.lastname.upper()}} {{user.firstname.capitalize()}}!
     </p>
     <p class="subtitle">
         Your username is {{ user.username }} and your email is {{ user.email }}

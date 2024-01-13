@@ -1,10 +1,9 @@
 from werkzeug.utils import secure_filename
-
 from app import app, db
 from flask_login import current_user, login_user
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm, MarketSearchForm
-from app.models import User, MarketRequest
+from app.forms import LoginForm, RegistrationForm, MarketSearchForm, FileUploadForm
+from app.models import User, MarketRequest, UploadFile
 from flask_login import logout_user, login_required
 import sqlalchemy as sa
 from app.api_requests import MarketSearchAPI
@@ -13,7 +12,6 @@ from app.api_requests import MarketSearchAPI
 @app.route('/')
 def home():
     return render_template('home.html')
-
 
 
 @app.route('/index')
@@ -45,26 +43,30 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
+    print("username :", form.username.data)
     if form.validate_on_submit():
-        test_user_exists = db.session.scalar(
+        print("----validate_on_submit----")
+        get_user = db.session.scalar(
             sa.select(User).where(User.username == form.username.data))
-
-        if test_user_exists is None:
+        print(get_user)
+        if get_user is None:
             filename = secure_filename(form.profile_picture.data.filename)
-            form.profile_picture.data.save(app.config.get('UPLOAD_FOLDER') + '/'+filename)
+            form.profile_picture.data.save(app.config.get('UPLOAD_FOLDER') + '\\' + filename)
 
-            test_user = User(username=form.username.data,
-                                firstname=form.first_name.data,
-                                lastname=form.last_name.data,
-                                gender=form.gender.data,
-                                profile_picture=filename)
+            user = User(
+                username=form.username.data,
+                firstname=form.firstname.data,
+                lastname=form.lastname.data,
+                gender=int(form.gender.data),
+                email=form.email.data,
+                profile_picture=filename)
 
-            test_user.set_password(form.password.data)
+            user.set_password(form.password.data)
 
-            db.session.add(test_user)
+            db.session.add(user)
             db.session.commit()
 
-            login_user(test_user)
+            login_user(user)
             flash('Congratulations, you are now a registered test_user!')
 
             return redirect(url_for('index'))
@@ -94,10 +96,11 @@ def users():
     return render_template("list_users.html", users=users)
 
 
-@app.route("/search_market/<userid>", methods=['GET', 'POST'])
+@app.route("/historic_company", methods=['GET', 'POST'])
 @login_required
-def ticker_infos(userid):
-    tickers = db.session.execute(sa.select(MarketRequest).where(MarketRequest.user_id == userid)).scalars().all()
+def ticker_infos():
+    tickers = db.session.execute(
+        sa.select(MarketRequest).where(MarketRequest.user_id == current_user.id)).scalars().all()
     print(tickers)
     return render_template("ticker_infos.html", tickers=tickers)
 
@@ -109,14 +112,35 @@ def market_search():
     if form.validate_on_submit():
         flash(f'Search requested for symbol {form.symbol.data}')
         api_request = MarketSearchAPI()
-        result = api_request.search_quote(str(form.symbol.data))
+        result = api_request.search_quote(str(form.symbol.data).upper())
         print(result)
         ticker_market = MarketRequest(symbol=result["symbol"],
                                       company_name=result["companyName"],
                                       price=result['primaryData']["askPrice"],
                                       net_change=result['primaryData']["netChange"],
-                                      user_id=current_user.id)
+                                      user_id=current_user.id
+                                      )
         db.session.add(ticker_market)
         db.session.commit()
         return redirect(url_for('ticker_infos', userid=current_user.id, ticker=result["symbol"]))
     return render_template("market_search.html", form=form)
+
+
+@app.route("/upload_and_analyze", methods=['GET', 'POST'])
+@login_required
+def upload_and_analyze():
+    files_uploaded = db.session.execute(
+            sa.select(UploadFile).where(UploadFile.user_id == current_user.id)).scalars().all()
+    form = FileUploadForm()
+    if form.validate_on_submit():
+        filename = secure_filename(form.file.data.filename)
+        form.file.data.save(app.config.get('UPLOAD_FOLDER') + '\\' + filename)
+        upload_file = UploadFile(
+            title=form.title.data,
+            filename=filename,
+            user_id=current_user.id
+        )
+        db.session.add(upload_file)
+        db.session.commit()
+        return redirect(url_for(("upload_and_analyze")))
+    return render_template("upload_and_analyze.html", form=form, files_uploaded=files_uploaded)

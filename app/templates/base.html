@@ -10,6 +10,7 @@
     <title>Bienvenue sur Microblog</title>
     {% endif %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
 <body class="container">
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
@@ -17,7 +18,7 @@
             <img src="../static/img/logo.png" width="30" height="140">
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true">test</span>
+            <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
@@ -38,22 +39,33 @@
                 <a href="{{ url_for('users') }}" class="navbar-item">
                     List of users
                 </a>
-
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         Market
                     </a>
-
                     <div class="navbar-dropdown">
-                        <a class="navbar-item">
+                        <a href="{{url_for('market_search')}}" class="navbar-item">
                             Search Company
                         </a>
-                        <a class="navbar-item">
+                        <a href="{{url_for('ticker_infos')}}" class="navbar-item">
                             Search History
                         </a>
-                        {% endif %}
                     </div>
                 </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        EDA
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="{{url_for('upload_and_analyze')}}" class="navbar-item">
+                            Upload a file
+                        </a>
+                        <a href="{{url_for('index')}}" class="navbar-item">
+                            Analyze
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
             </div>
             {% if current_user.is_anonymous %}
             <div class="navbar-end">
@@ -69,21 +81,35 @@
                 </div>
             </div>
             {% else %}
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a href="{{ url_for('logout') }}" class="button is-primary">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    <figure class="image is-24x24    mr-2">
+                        <img class="is-rounded" src="../static/uploads/{{ current_user.profile_picture }}">
+                    </figure>
+                    {{ current_user.username }}
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a href="{{ url_for('user', username=current_user.username) }}" class="navbar-item">
+                        My account
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="navbar-item has-text-danger">
+                          <span class="icon is-small is-left mr-2">
+                            <i class="fas fa-sign-out-alt"></i>
+                          </span>
                         <strong>Logout</strong>
                     </a>
                 </div>
             </div>
+
         </div>
         {% endif %}
     </div>
 </nav>
-<hr>
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 <ul>
+    {% print(message) %}
     {% for message in messages %}
     <li>{{ message }}</li>
     {% endfor %}

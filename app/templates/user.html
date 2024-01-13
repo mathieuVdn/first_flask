@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="section">
+  <div class="card">
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-128x128">
+            <img src="../static/uploads/{{ user.profile_picture }}" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">{{ user.firstname.capitalize() }} {{ user.lastname.upper()}}</p>
+          <p class="subtitle is-6">@{{ user.username }}</p>
+        </div>
+      </div>
+      <div class="content">
+        Here is {{ "Mrs." + user.lastname if user.gender else "Mr. " + user.lastname.upper() }}'s profile {{ "her " if user.gender else "his "}} email address is {{ user.email }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

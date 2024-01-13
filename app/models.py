@@ -44,6 +44,19 @@ class MarketRequest(db.Model):
         return f'<MarketRequest {self.symbol}>'
 
 
+class UploadFile(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[str] = so.mapped_column(sa.String(140))
+    filename: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+    upload_at: so.Mapped[datetime] = so.mapped_column(
+        index=True, default=lambda: datetime.now(timezone.utc))
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
+                                               index=True)
+
+    def __repr__(self):
+        return f'<UploadFile {self.title}>'
+
+
 @login.user_loader
 def load_user(id):
     return db.session .get(User, int(id))

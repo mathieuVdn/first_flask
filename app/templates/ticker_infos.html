@@ -1,15 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>List of Ticker</h1>
-    <div class="list_cards">
-        {% for ticker in tickers%}
-        <div class="cards {% if '+' in ticker.net_change %}positive{% elif '-' in ticker.net_change %}negative{% endif %}">
-            <p>{{ ticker.symbol }}</p>
-            <p>{{ ticker.company_name }}</p>
-            <p>{{ ticker.price }} </p>
-            <p>{{ ticker.net_change }}</p>
-        </div>
-        {% endfor %}
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-flex-start mt-6">
+    <h1 class="title">History of search tickers</h1>
+    <div class="mt-4">
+        <table class="table table is-striped">
+            <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Company Name</th>
+                <th>Amount</th>
+                <th>Net Change</th>
+                <th>TimeStamp</th>
+                <th > Evolution</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ticker in tickers %}
+            <tr>
+                <td>{{ ticker.symbol }}</td>
+                <td>{{ ticker.company_name }}</td>
+                <td>{{ ticker.price }}</td>
+                <td>{{ ticker.net_change }}</td>
+                <td>{{ ticker.timestamp}}</td>
+
+                <td class="is-vcentered is-text-centered">
+                    {%if '+' in ticker.net_change%}
+                    <figure class="image is-16x16 " >
+                        <img src="../static/img/increase.png" >
+                    </figure>
+                    {% else %}
+                    <figure class="image is-16x16">
+                        <img src="../static/img/decrease.png">
+                    </figure>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+</section>
+
 {% endblock %}

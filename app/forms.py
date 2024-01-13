@@ -45,5 +45,11 @@ class RegistrationForm(FlaskForm):
 
 
 class MarketSearchForm(FlaskForm):
-    symbol = StringField('Symbol', validators=[DataRequired()])
+    symbol = StringField('Ticker', validators=[DataRequired()])
     submit = SubmitField('Search')
+
+
+class FileUploadForm(FlaskForm):
+    title = StringField("Dataset name", validators=[DataRequired()])
+    file = FileField('Upload File', validators=[FileAllowed(['csv', 'xlsx'], 'CSV or Excel files only!'), FileRequired()])
+    submit = SubmitField('Upload')

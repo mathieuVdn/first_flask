@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Search Ticker</h1>
-        <form action="" method="POST" novalidate>
+<section class="section is-medium container">
+<h1 class="title has-text-centered ">Search Ticker</h1>
+    <form action="" method="POST" novalidate>
         {{ form.hidden_tag() }}
-            <div>
-            {{ form.symbol.label }} <br>
-            {{ form.symbol }} <br>
-            {% for error in form.symbol.errors %}
-                <span class="error">[{{ error }}]</span>
-            {% endfor %}
-            {{ form.submit() }}
-            </div>
+        <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                {{ form.symbol(class_="input") }}
+                <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+            </p>
+        </div>
+        {% for error in form.symbol.errors %}
+        <span class="error">[{{ error }}]</span>
+        {% endfor %}
+        <div class="field">
+            <p class="control has-text-centered mg-medium">
+                {{ form.submit(class_="button is-success")}}
+            </p>
+        </div>
     </form>
+</section>>
 {% endblock %}
