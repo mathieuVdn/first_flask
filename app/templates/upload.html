@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-justify-content-flex-start mt-4 ">
+    <h1 class="title has-text-centered mt-6">Upload your file</h1>
+    <h2 class="subtitle has-text-centered">CSV or Excel files only</h2>
+    <form class="mb-6" action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form_upload.hidden_tag() }}
+        <div class="field">
+            {{ form_upload.title.label(class_="label")}}
+            <p class="control has-icons-left has-icons-right">
+                {{ form_upload.title(class_="input")}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-file-excel"></i>
+                </span>
+                {% for error in form_upload.title.errors %}
+                <span class="help is-danger">{{ error }}</span>
+                {% endfor %}
+        </div>
+        <div id="file-js-example" class="file has-name">
+            <label class="file-label">
+                {{ form_upload.file(class_="file-input")}}
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        Choose a file…
+                    </span>
+                </span>
+                <span class="file-name">
+                        No file uploaded
+                </span>
+            </label>
+            {{form_upload.file.data.filename}}
+        </div>
+        {% for error in form_upload.file.errors %}
+        <span class="help is-danger">{{ error }}</span>
+        {% endfor %}
+        <div class="field">
+            <p class="control has-text-centered mg-medium">
+                {{ form_upload.submit(class_="button is-success")}}
+            </p>
+        </div>
+        </div>
+    </form>
+    <section
+            class="is-flex is-flex is-align-items-end is-justify-content-center is is-flex-wrap-wrap">
+        <article>
+            <h1 class="title mt-4">Your uploaded files</h1>
+            <div class="mt-4">
+                {% if files_uploaded%}
+                <table class="table table is-striped">
+                    <thead>
+                    <tr>
+                        <th>title</th>
+                        <th>filename</th>
+                        <th>upload_at</th>
+                        <th>analyze</th>
+                        <th>delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for file_uploaded in files_uploaded %}
+                    <tr>
+                        <td>{{ file_uploaded.title }}</td>
+                        <td>{{ file_uploaded.filename }}</td>
+                        <td>{{ file_uploaded.upload_at }}</td>
+                        <td class="has-text-centered ">
+                            <a href="{{ url_for('head', filename=file_uploaded.filename) }}">
+                                <i class="fas fa-search has-text-primary"></i>
+                            </a>
+                        </td>
+                        <td class="has-text-centered ">
+                            <a href="{{ url_for('delete_file', filename=file_uploaded.filename) }}" onclick="return confirm('Are you sure you want to delete this file?');">
+                                <i class="far fa-trash-alt has-text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <h2 class="subtitle">Upload a file</h2>
+                {% endif %}
+            </div>
+        </article>
+        <article>
+            <figure class="image is-128x128 mb-5">
+                <img src="{{ url_for('static', filename='img/analyze.svg') }}" alt="data processing">
+            </figure>
+        </article>
+    </section>
+
+</section>
+{% endblock %}
