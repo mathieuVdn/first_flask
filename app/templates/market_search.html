@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="section is-medium container">
-<h1 class="title has-text-centered ">Search Ticker</h1>
+<section class="section container ">
+<h1 class="title has-text-centered mt-5">Search Ticker</h1>
     <form action="" method="POST" novalidate>
         {{ form.hidden_tag() }}
         <div class="field">
             <p class="control has-icons-left has-icons-right">
                 {{ form.symbol(class_="input") }}
-                <span class="icon is-small is-right">
-              <i class="fas fa-check"></i>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
             </span>
             </p>
         </div>
@@ -18,8 +18,60 @@
         <div class="field">
             <p class="control has-text-centered mg-medium">
                 {{ form.submit(class_="button is-success")}}
+             <a href="{{ url_for('ticker_infos') }}" class="button is-light">
+                    Search history
+            </a>
             </p>
         </div>
     </form>
-</section>>
+</section>
+            <h1 class="title mt-4 has-text-centered">Your last search</h1>
+<section
+            class="is-flex is-flex is-align-items-start is-justify-content-center is is-flex-wrap-wrap">
+        <article>
+            <figure class="image is-128x128 mt-3 mr-6">
+                <img src="{{ url_for('static', filename='img/market.svg') }}" alt="data processing">
+            </figure>
+        </article>
+        <article class="box mr-3">
+            <div class="mt-4">
+                <div class="is-flex is is-justify-content-space-around">
+
+                {% if last_ticker%}
+                    <div class="mr-4">
+                        <h2 class="title is-4">{{last_ticker.company_name}}</h2>
+                        <h3 class="subtitle">{{last_ticker.symbol}}</h3>
+                    </div>
+                    <figure class="image is-32x32">
+                         {%if '+' in last_ticker.net_change%}
+                        <img src="{{ url_for('static', filename='img/increase.png') }}" alt="data processing">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/decrease.png') }}" alt="data processing">
+                        {% endif %}
+                    </figure>
+                </div>
+                <div class="is-flex is is-justify-content-space-around mt-5">
+                    <div class="mr-4">
+                        <h3 class="subtitle has-text-centered">Price</h3>
+                        <h2 class="title is-5 has-text-centered">{{last_ticker.price}}</h2>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="subtitle has-text-centered">Net Change</h3>
+                        <h2 class="title is-5 has-text-centered">{{last_ticker.net_change}}</h2>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="subtitle has-text-centered">Timestamp</h3>
+                        <h2 class="title is-5 has-text-centered">{{last_ticker.timestamp}}</h2>
+                    </div>
+                    {% else %}
+                    <div>
+                        <h2 class="subtitle">No ticker searched yet</h2>
+                        <p> Make search and see your result</p>
+                    </div>
+
+                {% endif %}
+            </div>
+
+        </article>
+    </section>
 {% endblock %}

@@ -16,5 +16,11 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 
+def custom_round(value, decimals=0):
+    return round(value, decimals)
+
+
+app.jinja_env.globals.update(custom_round=custom_round)
+
 from app import routes, models
 

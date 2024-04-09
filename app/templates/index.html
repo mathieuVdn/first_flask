@@ -1,12 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
-    <p class="title">
-        Welcome to my first Flask App {{ "Mrs. " if user.gender else "Mr. "}} {{user.lastname.upper()}} {{user.firstname.capitalize()}}!
-    </p>
-    <p class="subtitle">
-        Your username is {{ user.username }} and your email is {{ user.email }}
-    </p>
+<section
+        class="hero is-fullheight-with-navbar is-flex is-flex-direction-row-reverse is align-items-center is-justify-content-space-evenly is is-flex-wrap-wrap is-align-items-center">
+    <div class="is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+        <p class="title has-text-centered mt-3">
+            Welcome to my first Flask App {{ "Mrs. " if user.gender else "Mr. "}} {{user.lastname.upper()}}
+            {{user.firstname.capitalize()}}!
+        </p>
+        <p class="subtitle has-text-centered">
+            Your username is {{ user.username }} and your email is {{ user.email }}
+        </p>
+        <p>
+            <a href="{{ url_for('market_search') }}" class="button is-primary mr-3">
+                <strong>Visit Market</strong>
+            </a>
+            <a href="{{ url_for('upload_and_analyze') }}" class="button is-light">
+                <strong>Explore your data</strong>
+            </a>
+
+        </p>
+    </div>
+    <div class="mr-4">
+        <figure class="image is-256x256">
+            <img src="{{ url_for('static', filename='img/welcoming.svg') }}" alt="data processing">
+        </figure>
+    </div>
 </section>
 {% endblock %}

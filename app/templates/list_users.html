@@ -3,16 +3,20 @@
 {% block content %}
 <section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-flex-start mt-6">
     <h1 class="title">List of Users</h1>
-    <div>
+    <h2 class="subtitle">Here is the list of all users</h2>
+    <div class="is-flex">
+        <figure class="image is-128x128">
+            <img src="{{ url_for('static', filename='img/female_user_left.svg') }}" alt="data processing">
+        </figure>
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Gender</th>
+              <th class="has-text-centered">ID</th>
+              <th class="has-text-centered">Username</th>
+              <th class="has-text-centered">Email</th>
+              <th class="has-text-centered">Firstname</th>
+              <th class="has-text-centered">Lastname</th>
+              <th class="has-text-centered">Gender</th>
             </tr>
           </thead>
           <tbody>
@@ -21,13 +25,16 @@
                 <td>{{ user.id}}</td>
                 <td><a href="user/{{ user.username }}">{{ user.username }}</a></td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname.capitalize() }}</td>
+                <td>{{ user.lastname.upper() }}</td>
                <td>{{ "Male" if user.gender == 0 else "Female" }}</td>
             </tr>
           {% endfor %}
           </tbody>
         </table>
+        <figure class="image is-128x128">
+            <img src="{{ url_for('static', filename='img/male_user_right.svg') }}" alt="data processing">
+        </figure>
     </div>
 </section>
 {% endblock %}

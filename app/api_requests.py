@@ -1,11 +1,12 @@
 import requests
 import json
 import os
+from flask import render_template, flash
 
 
 class MarketSearchAPI:
     base_url = "https://devapi.ai/"
-    print(os.environ.get("PERSONAL_ACCESS_TOKEN"))
+    print("test", os.getenv("PERSONAL_ACCESS_TOKEN"))
 
     def search_quote(self, query):
 
@@ -20,8 +21,12 @@ class MarketSearchAPI:
         try:
             response = requests.get(url, headers=headers, params=params)
             if response.status_code == 200:
-                result = response.json()
-                return result["body"]
+                if response["success"]:
+                    flash(f'error: Search requested for symbol {query} failed')
+                    return None
+                else:
+                    result = response.json()
+                    return result["body"]
             else:
                 print(f"Erreur {response.status_code}: {response.text}")
                 return None

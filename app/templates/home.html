@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
-      <p class="title">
-        Welcome to my first Flask App
-      </p>
-      <p class="subtitle">
-        Login or create an account to enjoy the site
-      </p>
-         <div class="buttons">
+<section
+        class="hero columns is-fullheight-with-navbar is-flex is-flex-direction-row is align-items-center is-justify-content-space-evenly is is-flex-wrap-wrap is-align-items-center">
+    <div class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+        <p class="title">
+            Welcome to my first Flask App
+        </p>
+        <p class="subtitle">
+            Login or create an account to enjoy the site
+        </p>
+        <div class="buttons">
             <a href="{{ url_for('register') }}" class="button is-primary">
                 <strong>Sign up</strong>
             </a>
@@ -15,5 +17,12 @@
                 Log in
             </a>
         </div>
+    </div>
+    <div class="ml-3">
+        <figure class="image is-256x256">
+            <img src="{{ url_for('static', filename='img/login.svg') }}" alt="data processing">
+        </figure>
+    </div>
 </section>
+
 {% endblock %}

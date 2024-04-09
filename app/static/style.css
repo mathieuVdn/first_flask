@@ -4,3 +4,46 @@
 .test{
     margin: 50rem;
 }
+
+.box:last-child {
+    margin-bottom: 1.5rem;
+}
+
+@keyframes slideIn {
+    from {
+        top: -100px;
+    }
+    to {
+        top: 60px;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        top: 60px;
+    }
+    to {
+        top: -100px;
+    }
+}
+
+.notification {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #00d1b2;
+    color: #fff;
+    padding: 1rem;
+    animation: slideIn 0.5s ease-in-out;
+    width: 90%;
+    max-width: 1344px;
+}
+
+.notification button.delete {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1rem;
+}

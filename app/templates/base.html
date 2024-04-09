@@ -10,113 +10,146 @@
     <title>Bienvenue sur Microblog</title>
     {% endif %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../static/style.css">
 
 <body class="container">
-<nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="{{ url_for('index') }}">
-            <img src="../static/img/logo.png" width="30" height="140">
-        </a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
-        {% if current_user.is_anonymous %}
-        <div class="navbar-start">
-            <a href="{{ url_for('home') }}" class="navbar-item">
-                Home
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="{{ url_for('index') }}">
+                <img src="../static/img/logo.png" width="40" height="80">
             </a>
-            {% else %}
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+            {% if current_user.is_anonymous %}
             <div class="navbar-start">
-                <a href="{{ url_for('index') }}" class="navbar-item">
+                <a href="{{ url_for('home') }}" class="navbar-item">
                     Home
                 </a>
-                {% endif %}
-                {% if current_user.is_authenticated %}
-                <a href="{{ url_for('users') }}" class="navbar-item">
-                    List of users
-                </a>
+                {% else %}
+                <div class="navbar-start">
+                    <a href="{{ url_for('index') }}" class="navbar-item">
+                        Home
+                    </a>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('users') }}" class="navbar-item">
+                        List of users
+                    </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Market
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a href="{{url_for('market_search')}}" class="navbar-item">
+                                Search Company
+                            </a>
+                            <a href="{{url_for('ticker_infos')}}" class="navbar-item">
+                                Search History
+                            </a>
+                        </div>
+                    </div>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            EDA
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a href="{{url_for('upload_and_analyze')}}" class="navbar-item">
+                                Upload a file
+                            </a>
+                            <a href="{{url_for('analyze')}}" class="navbar-item">
+                                Analyze
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if current_user.is_anonymous %}
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a href="{{ url_for('register') }}" class="button is-primary">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a href="{{ url_for('login') }}" class="button is-light">
+                                Log in
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        Market
+                        <figure class="image is-24x24    mr-2">
+                            <img class="is-rounded" src="../static/uploads/{{ current_user.profile_picture }}">
+                        </figure>
+                        {{ current_user.username }}
                     </a>
-                    <div class="navbar-dropdown">
-                        <a href="{{url_for('market_search')}}" class="navbar-item">
-                            Search Company
-                        </a>
-                        <a href="{{url_for('ticker_infos')}}" class="navbar-item">
-                            Search History
-                        </a>
-                    </div>
-                </div>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        EDA
-                    </a>
-                    <div class="navbar-dropdown">
-                        <a href="{{url_for('upload_and_analyze')}}" class="navbar-item">
-                            Upload a file
-                        </a>
-                        <a href="{{url_for('index')}}" class="navbar-item">
-                            Analyze
-                        </a>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-            {% if current_user.is_anonymous %}
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a href="{{ url_for('register') }}" class="button is-primary">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a href="{{ url_for('login') }}" class="button is-light">
-                            Log in
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    <figure class="image is-24x24    mr-2">
-                        <img class="is-rounded" src="../static/uploads/{{ current_user.profile_picture }}">
-                    </figure>
-                    {{ current_user.username }}
-                </a>
 
-                <div class="navbar-dropdown">
-                    <a href="{{ url_for('user', username=current_user.username) }}" class="navbar-item">
-                        My account
-                    </a>
-                    <a href="{{ url_for('logout') }}" class="navbar-item has-text-danger">
-                          <span class="icon is-small is-left mr-2">
-                            <i class="fas fa-sign-out-alt"></i>
-                          </span>
-                        <strong>Logout</strong>
-                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="{{ url_for('user', username=current_user.username) }}" class="navbar-item">
+                            <span class="icon is-small is-left mr-2">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            My account
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="navbar-item has-text-danger">
+                              <span class="icon is-small is-left mr-2">
+                                <i class="fas fa-sign-out-alt"></i>
+                              </span>
+                            <strong>Logout</strong>
+                        </a>
+                    </div>
                 </div>
             </div>
-
+            {% endif %}
         </div>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="container">
+        {% for message in messages %}
+        {% if message.startswith('success:') %}
+        <li class="notification is-primary" id="notification">
+            <i class="delete fas fa-times" onclick="closeNotification()"></i>
+            {{ message[8:] }}
+        </li>
+        {% elif message.startswith('error:') %}
+         <li class="notification is-danger" id="notification">
+            <i class="delete fas fa-times" onclick="closeNotification()"></i>
+            {{ message[6:] }}
+        {% else %}
+        <li>{{ message }}</li>
         {% endif %}
-    </div>
-</nav>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-    {% print(message) %}
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
 {% endif %}
 {% endwith %}
 {% block content %}{% endblock %}
 </body>
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script>
+      const fileInput = document.querySelector('#file-js-example input[type=file]');
+      fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+          const fileName = document.querySelector('#file-js-example .file-name');
+          fileName.textContent = fileInput.files[0].name;
+        }
+      }
+    </script>
+    <script>
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.animation = 'slideOut 0.5s ease-in-out';
+
+            // Attendez que l'animation soit terminée avant de supprimer la notification
+            setTimeout(() => {
+                notification.remove();
+            }, 500);
+        }
+    </script>
 </html>

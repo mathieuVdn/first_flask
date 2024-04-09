@@ -80,9 +80,9 @@
                 <span class="help is-danger">{{ error }}</span>
                 {% endfor %}
         </div>
-        <div class="file">
+        <div id="file-js-example" class="file has-name">
             <label class="file-label">
-                 {{ form.profile_picture(class_="file-input") }}
+                {{ form.profile_picture(class_="file-input") }}
                 <span class="file-cta">
                     <span class="file-icon">
                         <i class="fas fa-upload"></i>
@@ -90,6 +90,9 @@
                     <span class="file-label">
                         {{ form.profile_picture.label }}
                     </span>
+                </span>
+                <span class="file-name">
+                        No file uploaded
                 </span>
             </label>
         </div>

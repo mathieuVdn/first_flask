@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField(
         "Repeat Password", validators=[DataRequired(), EqualTo('password')]
     )
-    profile_picture = FileField("Profile Picture", validators=[FileAllowed(['jpg', 'jpeg', 'png']), FileRequired()])
+    profile_picture = FileField("Upload profile picture", validators=[FileAllowed(['jpg', 'jpeg', 'png']), FileRequired()])
     submit = SubmitField('Register')
 
     def validate_username(self, username):

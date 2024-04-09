@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-justify-content-flex-start mt-4">
+    <h1 class="title has-text-centered">Analysis Result for {{ filename }}</h1>
+     <div class="tabs is-toggle is-centered is-medium">
+        <ul>
+            <li>
+                <a href="{{url_for('head', filename=filename)}}">
+                    <span>Head</span>
+                </a>
+            </li>
+            <li class="is-active">
+                <a href="{{url_for('infos', filename=filename)}}">
+                    <span>Infos</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url_for('describe', filename=filename)}}">
+                    <span>Describe</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="box mt-4">
+        <h2 class="title is-3">Infos</h2>
+        <p>Total Entries: {{ total_entries }}</p>
+        <div class="table-container mt-2">
+            {{ infos | safe }}
+        </div>
+    </div>
+    <div class="field mt-4 mb-4">
+        <p class="control has-text-centered mg-medium">
+            <a href="{{ url_for('upload_and_analyze') }}" class="button is-info">Back to Upload and Analyze</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

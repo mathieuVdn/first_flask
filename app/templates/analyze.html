@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-justify-content-flex-start mt-4 ">
+    <h1 class="title has-text-centered mt-6">Analyses your files</h1>
+    <article class="is-flex is-justify-content-space-evenly is-flex-wrap-wrap is-align-items-stretch">
+    {% for file_uploaded in files_uploaded %}
+        <div class="box">
+            <div class="is-flex is-justify-content-space-between ">
+                <h1 class="title">{{ file_uploaded.title }}</h1>
+                <a href="{{ url_for('delete_file', filename=file_uploaded.filename) }}"
+                   onclick="return confirm('Are you sure you want to delete this file?');">
+                    <i class="far fa-trash-alt has-text-danger"></i>
+                </a>
+            </div>
+            <div class="is-flex is-justify-content-space-between">
+                <div>
+                    <p><strong>Filename: </strong>{{ file_uploaded.filename }}</p>
+                    <p><strong>Uploaded at: </strong>{{ file_uploaded.upload_at }}</p>
+                    <p><strong>Size: </strong>{{ custom_round(file_uploaded.filesize / (1024 * 1024), 2) }} mb</p>
+                </div>
+                <p class="has-text-centered ml-3 ">
+                    <a class="button is-primary " href="{{ url_for('head', filename=file_uploaded.filename) }}">
+                        Analyze <i class="fas fa-search ml-3"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </article>
+</section>
+
+</section>
+{% endblock %}

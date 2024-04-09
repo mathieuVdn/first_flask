@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-justify-content-flex-start mt-4 ">
+<section class="hero is-fullheight-with-navbar is-flex is-flex-direction-column is-justify-content-flex-start mt-4">
     <h1 class="title has-text-centered mt-6">Upload your file</h1>
     <h2 class="subtitle has-text-centered">CSV or Excel files only</h2>
     <form class="mb-6" action="" method="post" enctype="multipart/form-data" novalidate>
@@ -53,11 +53,12 @@
                 <table class="table table is-striped">
                     <thead>
                     <tr>
-                        <th>title</th>
-                        <th>filename</th>
-                        <th>upload_at</th>
-                        <th>analyze</th>
-                        <th>delete</th>
+                        <th>Title</th>
+                        <th>Filename</th>
+                        <th>Upload_at</th>
+                        <th>Size</th>
+                        <th>Analyze</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,6 +67,7 @@
                         <td>{{ file_uploaded.title }}</td>
                         <td>{{ file_uploaded.filename }}</td>
                         <td>{{ file_uploaded.upload_at }}</td>
+                        <td>{{ custom_round(file_uploaded.filesize / (1024 * 1024), 2) }} mb</td>
                         <td class="has-text-centered ">
                             <a href="{{ url_for('head', filename=file_uploaded.filename) }}">
                                 <i class="fas fa-search has-text-primary"></i>
